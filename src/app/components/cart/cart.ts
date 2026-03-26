@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CurrencyIndianPipe } from '../../pipes/currency-indian.pipe';
 import { CartService } from '../../services/cart.service';
 import { CartItem } from '../../models/cart-item.model';
@@ -22,7 +22,10 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -54,9 +57,7 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
-    alert('Thank you for your purchase! Total: ₹' + this.totalPrice);
-    this.cartService.clearCart();
-    this.loadCart();
+    this.router.navigate(['/checkout']);
   }
 
   continueShopping(): void {
