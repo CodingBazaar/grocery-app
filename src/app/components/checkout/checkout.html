@@ -160,9 +160,9 @@
           <!-- Cart Items -->
           <div class="summary-items">
             <div class="summary-item" *ngFor="let item of cartItems">
-              <div class="item-name">{{ item.name }}</div>
+              <div class="item-name">{{ item.product.name }}</div>
               <div class="item-qty">x{{ item.quantity }}</div>
-              <div class="item-price">{{ (item.price * item.quantity) | currencyInd }}</div>
+              <div class="item-price">{{ (item.product.price * item.quantity) | currencyInd }}</div>
             </div>
             
             <div class="summary-divider"></div>
