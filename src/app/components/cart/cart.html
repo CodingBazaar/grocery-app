@@ -1,0 +1,91 @@
+<div class="cart-container">
+  <!-- Cart Header -->
+  <div class="cart-header">
+    <h1>Shopping Cart</h1>
+  </div>
+
+  <!-- Cart Items -->
+  <div *ngIf="cartItems.length > 0; else emptyCart" class="cart-content">
+    <!-- Items Table -->
+    <div class="items-card">
+      <h2>Your Items</h2>
+
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartItems" class="cart-item-row">
+            <td class="product-name">
+              <span>{{ item.product.name }}</span>
+              <br>
+              <span class="product-category">{{ item.product.category }}</span>
+            </td>
+            <td class="product-price">{{ item.product.price | currencyInd }}</td>
+            <td class="quantity-cell">
+              <div class="quantity-control">
+                <button (click)="updateQuantity(item, item.quantity - 1)" class="qty-btn" title="Decrease">−</button>
+                <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" class="qty-input" min="1">
+                <button (click)="updateQuantity(item, item.quantity + 1)" class="qty-btn" title="Increase">+</button>
+              </div>
+            </td>
+            <td class="total-price">{{ (item.product.price * item.quantity) | currencyInd }}</td>
+            <td class="actions-cell">
+              <button (click)="removeItem(item.product.id)" class="remove-btn" title="Remove from cart">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="summary-section">
+      <div class="summary-card">
+        <h2>Order Summary</h2>
+
+        <div class="summary-content">
+          <div class="summary-row">
+            <span class="summary-label">Subtotal:</span>
+            <span class="summary-value">{{ totalPrice | currencyInd }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Delivery Fee:</span>
+            <span class="summary-value">₹50</span>
+          </div>
+          <div class="summary-row total-row">
+            <span class="summary-label">Total:</span>
+            <span class="summary-value total-value">{{ (totalPrice + 50) | currencyInd }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button routerLink="/products" class="continue-btn">
+          ← Continue Shopping
+        </button>
+        <button (click)="checkout()" class="checkout-btn">
+          ✓ Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty Cart Message -->
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <span class="empty-icon">🛒</span>
+      <h2>Your cart is empty</h2>
+      <p>Start shopping to add products to your cart</p>
+      <button routerLink="/products" class="start-shopping-btn">
+        Start Shopping
+      </button>
+    </div>
+  </ng-template>
+</div>

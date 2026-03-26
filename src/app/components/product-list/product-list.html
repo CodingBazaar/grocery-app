@@ -1,0 +1,76 @@
+<div class="product-list-container">
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <div class="hero-banner-inner">
+      <div class="hero-content">
+        <h1 class="hero-title">Fresh Groceries Delivered</h1>
+        <p class="hero-subtitle">
+          We bring the best produce to your doorstep, guaranteed fresh every time
+        </p>
+        <button class="hero-cta">Shop Now</button>
+      </div>
+      <div class="hero-image">
+        <img src="images/hero_bg.jpg" alt="Fresh groceries" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Section -->
+  <div class="featured-section" *ngIf="products.length > 0">
+    <h2 class="section-title">You Might Need</h2>
+    <div class="featured-grid">
+      <div *ngFor="let product of products.slice(0, 3)" class="featured-card">
+        <div class="featured-emoji">{{ getCategoryEmoji(product.category) }}</div>
+        <h3>{{ product.name }}</h3>
+        <p class="featured-price">{{ product.price | currencyInd }}</p>
+        <button (click)="addToCart(product)" class="featured-add-btn">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="category-filter">
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="category-chips">
+      <button
+        *ngFor="let category of categories"
+        (click)="onCategorySelect(category)"
+        [class.active]="selectedCategory === category"
+        class="category-chip"
+      >
+        {{ getCategoryEmoji(category) }} {{ category }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid-container">
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      <!-- Product Image -->
+      <div class="card-image">
+        <span class="product-emoji">🛍️</span>
+      </div>
+
+      <!-- Product Details -->
+      <div class="card-content">
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-category">{{ product.category }}</p>
+        <p class="product-description">{{ product.description }}</p>
+      </div>
+
+      <!-- Price and Action -->
+      <div class="card-footer">
+        <span class="product-price">{{ product.price | currencyInd }}</span>
+        <button (click)="addToCart(product)" class="add-to-cart-btn" title="Add to cart">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Products Message -->
+  <div *ngIf="filteredProducts.length === 0" class="no-products">
+    <span class="empty-icon">🛍️</span>
+    <p>No products found</p>
+  </div>
+</div>

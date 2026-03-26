@@ -1,0 +1,22 @@
+<div class="navbar">
+  <div class="navbar-container">
+    <!-- Logo and Title -->
+    <div class="logo-section" routerLink="/products">
+      <span class="app-title">🛒 GroceryApp</span>
+    </div>
+
+    <!-- Search Bar -->
+    <input 
+      type="text" 
+      class="search-input"
+      [(ngModel)]="searchTerm" 
+      (input)="onSearch(searchTerm)" 
+      placeholder="Search products..."
+    >
+
+    <!-- Cart Button -->
+    <button class="cart-btn" routerLink="/cart" title="Go to Cart">
+      🛍️ Cart <span class="cart-badge" *ngIf="(cartCount$ | async) as count">{{ count }}</span>
+    </button>
+  </div>
+</div>
